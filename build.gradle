@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group 'net.jacobpeterson'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation group: 'com.google.guava', name: 'guava', version: '30.1.1-jre'
+}
+
+mainClassName = 'net.jacobpeterson.NextcloudUserImporter'
+
+jar {
+    manifest {
+        attributes('Main-Class': mainClassName)
+    }
+
+    archiveName('NextcloudUserImporter.jar')
+
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
